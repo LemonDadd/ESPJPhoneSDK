@@ -6,18 +6,32 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		DA7D1C7E224AA1D20054FA9A /* ESPJPhone */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = DA7D1C7F224AA1D20054FA9A /* Build configuration list for PBXAggregateTarget "ESPJPhone" */;
+			buildPhases = (
+				DA7D1C82224AA1E00054FA9A /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = ESPJPhone;
+			productName = ESPJPhone;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		B01CB85D224A0FA000A9F01C /* ESPJPhoneSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01CB853224A0FA000A9F01C /* ESPJPhoneSDK.framework */; };
 		B01CB862224A0FA000A9F01C /* ESPJPhoneSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CB861224A0FA000A9F01C /* ESPJPhoneSDKTests.m */; };
 		B01CB864224A0FA000A9F01C /* ESPJPhoneSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB856224A0FA000A9F01C /* ESPJPhoneSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B01CB876224A0FC200A9F01C /* SocketRocketUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CB86E224A0FC200A9F01C /* SocketRocketUtility.m */; };
 		B01CB877224A0FC200A9F01C /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CB86F224A0FC200A9F01C /* SRWebSocket.m */; };
-		B01CB878224A0FC200A9F01C /* PJPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB870224A0FC200A9F01C /* PJPhone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B01CB878224A0FC200A9F01C /* PJPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB870224A0FC200A9F01C /* PJPhone.h */; };
 		B01CB879224A0FC200A9F01C /* ESPJPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CB871224A0FC200A9F01C /* ESPJPhone.m */; };
 		B01CB87A224A0FC200A9F01C /* SocketRocketUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB872224A0FC200A9F01C /* SocketRocketUtility.h */; };
 		B01CB87B224A0FC200A9F01C /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB873224A0FC200A9F01C /* SRWebSocket.h */; };
 		B01CB87C224A0FC200A9F01C /* PJPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CB874224A0FC200A9F01C /* PJPhone.m */; };
-		B01CB87D224A0FC200A9F01C /* ESPJPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB875224A0FC200A9F01C /* ESPJPhone.h */; };
+		B01CB87D224A0FC200A9F01C /* ESPJPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB875224A0FC200A9F01C /* ESPJPhone.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B01CB880224A0FDD00A9F01C /* ESPlayAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CB87E224A0FDC00A9F01C /* ESPlayAudio.m */; };
 		B01CB881224A0FDD00A9F01C /* ESPlayAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CB87F224A0FDC00A9F01C /* ESPlayAudio.h */; };
 		B01CBB53224A106E00A9F01C /* AFSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = B01CBB46224A106E00A9F01C /* AFSecurityPolicy.h */; };
@@ -68,6 +82,8 @@
 		B01CC285224A1B1200A9F01C /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B01CBCD6224A18F600A9F01C /* libwebrtc.a */; };
 		B01CC286224A1B1200A9F01C /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B01CBCD2224A18F600A9F01C /* libyuv.a */; };
 		B01CC287224A1B1F00A9F01C /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B01CBCD0224A18F600A9F01C /* libopus.a */; };
+		DA7D1C7C224A5DEB0054FA9A /* ESPMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = DA7D1C7A224A5DEB0054FA9A /* ESPMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA7D1C7D224A5DEB0054FA9A /* ESPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7D1C7B224A5DEB0054FA9A /* ESPMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -458,6 +474,8 @@
 		B01CBCEA224A18F600A9F01C /* stun_transaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stun_transaction.h; sourceTree = "<group>"; };
 		B01CBCEB224A18F600A9F01C /* stun_auth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stun_auth.h; sourceTree = "<group>"; };
 		B01CBCED224A18F600A9F01C /* libpjnath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpjnath.a; sourceTree = "<group>"; };
+		DA7D1C7A224A5DEB0054FA9A /* ESPMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESPMessage.h; sourceTree = "<group>"; };
+		DA7D1C7B224A5DEB0054FA9A /* ESPMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ESPMessage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -566,6 +584,8 @@
 				B01CB874224A0FC200A9F01C /* PJPhone.m */,
 				B01CB875224A0FC200A9F01C /* ESPJPhone.h */,
 				B01CB871224A0FC200A9F01C /* ESPJPhone.m */,
+				DA7D1C7A224A5DEB0054FA9A /* ESPMessage.h */,
+				DA7D1C7B224A5DEB0054FA9A /* ESPMessage.m */,
 			);
 			path = ESPhone;
 			sourceTree = "<group>";
@@ -1244,6 +1264,7 @@
 				B01CB864224A0FA000A9F01C /* ESPJPhoneSDK.h in Headers */,
 				B01CBB55224A106E00A9F01C /* AFURLSessionManager.h in Headers */,
 				B01CBB5E224A106E00A9F01C /* AFHTTPSessionManager.h in Headers */,
+				DA7D1C7C224A5DEB0054FA9A /* ESPMessage.h in Headers */,
 				B01CBB53224A106E00A9F01C /* AFSecurityPolicy.h in Headers */,
 				B01CB881224A0FDD00A9F01C /* ESPlayAudio.h in Headers */,
 				B01CB87D224A0FC200A9F01C /* ESPJPhone.h in Headers */,
@@ -1311,6 +1332,9 @@
 					B01CB85B224A0FA000A9F01C = {
 						CreatedOnToolsVersion = 10.1;
 					};
+					DA7D1C7E224AA1D20054FA9A = {
+						CreatedOnToolsVersion = 10.1;
+					};
 				};
 			};
 			buildConfigurationList = B01CB84D224A0FA000A9F01C /* Build configuration list for PBXProject "ESPJPhoneSDK" */;
@@ -1327,6 +1351,7 @@
 			targets = (
 				B01CB852224A0FA000A9F01C /* ESPJPhoneSDK */,
 				B01CB85B224A0FA000A9F01C /* ESPJPhoneSDKTests */,
+				DA7D1C7E224AA1D20054FA9A /* ESPJPhone */,
 			);
 		};
 /* End PBXProject section */
@@ -1348,11 +1373,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DA7D1C82224AA1E00054FA9A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Sets the target folders and the final framework product.\n# 如果工程名称和Framework的Target名称不一样的话，要自定义FMKNAME\n# 例如: FMK_NAME = \"MyFramework\"\nFMK_NAME=${PROJECT_NAME}\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n# -configuration ${CONFIGURATION}\n# Clean and Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos clean build\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator clean build\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\nmkdir -p \"${INSTALL_DIR}\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/\"\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/${FMK_NAME}\"\nrm -r \"${WRK_DIR}\"\nopen \"${INSTALL_DIR}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B01CB84F224A0FA000A9F01C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA7D1C7D224A5DEB0054FA9A /* ESPMessage.m in Sources */,
 				B01CBB5B224A106E00A9F01C /* AFURLRequestSerialization.m in Sources */,
 				B01CB87C224A0FC200A9F01C /* PJPhone.m in Sources */,
 				B01CBB5C224A106E00A9F01C /* AFNetworkReachabilityManager.m in Sources */,
@@ -1547,6 +1593,8 @@
 					"$(PROJECT_DIR)/ESPJPhoneSDK/espjsip/third_party/lib",
 					"$(PROJECT_DIR)/ESPJPhoneSDK/espjsip/pjnath/lib",
 				);
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = quanqiuwa.ESPJPhoneSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1598,6 +1646,8 @@
 					"$(PROJECT_DIR)/ESPJPhoneSDK/espjsip/third_party/lib",
 					"$(PROJECT_DIR)/ESPJPhoneSDK/espjsip/pjnath/lib",
 				);
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = quanqiuwa.ESPJPhoneSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1640,6 +1690,24 @@
 			};
 			name = Release;
 		};
+		DA7D1C80224AA1D20054FA9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4C4BBJ8J25;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DA7D1C81224AA1D20054FA9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4C4BBJ8J25;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1666,6 +1734,15 @@
 			buildConfigurations = (
 				B01CB86B224A0FA000A9F01C /* Debug */,
 				B01CB86C224A0FA000A9F01C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA7D1C7F224AA1D20054FA9A /* Build configuration list for PBXAggregateTarget "ESPJPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA7D1C80224AA1D20054FA9A /* Debug */,
+				DA7D1C81224AA1D20054FA9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

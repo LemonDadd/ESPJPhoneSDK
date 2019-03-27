@@ -7,26 +7,57 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ESPMessage.h"
 
-@protocol CTIBodyBackDelegate <NSObject>
 
+typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
+    ESPJPhoneCallStatus_NULL=0,           /**< 在发送或接收邀请之前*/
+    ESPJPhoneCallStatus_CALLING,          /**< 发出邀请后*/
+    ESPJPhoneCallStatus_INCOMING,         /**< 收到邀请后*/
+    ESPJPhoneCallStatus_EARLY,            /**< 响应*/
+    ESPJPhoneCallStatus_CONNECTING,       /**< 呼叫中*/
+    ESPJPhoneCallStatus_CONFIRMED,        /**< 接通*/
+    ESPJPhoneCallStatus_DISCONNECTED,     /**< 挂断*/
+};
+
+
+
+@protocol ESPJPhoneDelagate <NSObject>
+
+/**
+ 所有的sipserver事件都会回调此方法
+ @param message 返回消息对象
+ */
 @required
+- (void)onEventMessageHandler:(ESPMessage *)message;
 
 
-//
--(void)CTIdidReceiveMessage:(id)message;
-
-
+/**
+ 通话状态的变化 可根据onEventMessageHandler获取通话的信息
+ */
 @optional
-- (void)SocketOpenSuccess;
-
-- (void)SocketCloseSuccess;
+- (void)onCallStatusChanged:(ESPJPhoneCallStatus)callStatus;
 
 @end
 
-
 @interface ESPJPhone : NSObject
-@property(nonatomic,weak)id<CTIBodyBackDelegate>   CTIBodyBackDelegate;
+
+
+@property (nonatomic, weak)id<ESPJPhoneDelagate> delegate;
+
+
+/**
+ 单例创建
+ */
++ (instancetype )sharedESPJPhone;
+
+
+/**
+ 创建SUA
+ SUA初始化配置
+ 在appDelegate中进行
+ */
+-(BOOL)startESPJSUA;
 
 /*
  * @brief 注册分机
@@ -41,42 +72,6 @@
  */
 -(BOOL)ESClientUnRegister;
 
-/*
- * @brief 初始化CTI接口
- * @param registerSip - 是否注册直接注册分机
- * @param dnNumber - 分机号码
- * @param dnPassword - 分机密码
- * @param ctiUrl - ctiUrl
- * @param sipServerUrl - sipServer服务器地址
- */
--(BOOL)ESClientCTIInit:(BOOL)registerSip ctiUrl:(NSString*)ctiUrl sipServerUrl:(NSString*)sipServerUrl dnNumber:(NSString*)dnNumber dnPassword:(NSString*)dnPassword;
-
-
-/*
- * @brief 结束初始化接口
- */
--(void)ESClientDeInit;
-
-/*
- * @brief 登入坐席接口
- */
--(void)ESClientOnline;
-
-
-/*
- * @brief 登出坐席接口
- */
--(void)ESClientOffline;
-
-/*
- * @brief 就绪
- */
--(void)ESClientReady;
-
-/*
- * @brief 取消就绪
- */
--(void)ESClientnotReady;
 
 /*
  * @brief 拨打
@@ -109,7 +104,7 @@
 -(void)ESClientRetriveCall:(NSString*)connId;
 
 /*
- * @brief 取回保持
+ * @brief 转接
  * @param phoneNumber - 转接号码
  * @param connId - 呼叫标识
  */
@@ -117,12 +112,26 @@
 
 
 /*
- * @brief 取回保持
+ * @brief 会议通话
  * @param phoneNumber - 邀请会议号码
  * @param connId - 呼叫标识
  */
--(void)ESClientConferenceCall:(NSString* )phoneNumber connId:(NSString*)connId;
+-(void)ESClientConferenceCall:(NSString* )phoneNumber;
 
+
+/**
+ 挂断
+ @param callid - 呼叫标识
+ @param requestMessage - 结束语
+ */
+-(void)ESClientHangup:(NSInteger)callid requestMessage:(NSString*)requestMessage;
+
+
+
+/**
+ 登出
+ */
+-(BOOL)ESClientLogOut;
 
 @end
 

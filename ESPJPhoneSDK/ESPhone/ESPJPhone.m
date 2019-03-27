@@ -8,9 +8,88 @@
 
 #import "ESPJPhone.h"
 #import "PJPhone.h"
+#import "SocketRocketUtility.h"
+#import "SRWebSocket.h"
+#import "ESPlayAudio.h"
+
+@interface ESPJPhone()
+
+@property (nonatomic,assign) BOOL isConferenceCall;//是否会议通话
+@property (nonatomic, assign) BOOL isCalling;//是否通话中
+
+@end
 
 @implementation ESPJPhone
 
+static  ESPJPhone  *_espjPhone;
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone
+{
+    static dispatch_once_t onceToken;
+    
+    @synchronized (self) {
+        dispatch_once(&onceToken, ^{
+            
+            _espjPhone = [super allocWithZone:zone];
+        });
+    }
+    
+    return _espjPhone;
+}
+
++ (instancetype _Nonnull)sharedESPJPhone
+{
+    
+    return _espjPhone = [[self alloc] init];
+}
+
+
+- (BOOL)startESPJSUA {
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onEventMessageChanged:) name:@"onEventMessageHandler" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(ncomingCallNotification:) name:@"SIPIncomingCallNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(callStatusChangedNotification:) name:@"SIPCallStatusChangedNotification" object:nil];
+    
+    
+    return [[PJPhone sharedPJPhone]startpjsua];
+}
+
+//消息的回调
+- (void)onEventMessageChanged:(NSNotification *)notification {
+    NSDictionary * dict= [notification userInfo];
+    
+    ESPMessage *message = [[ESPMessage alloc]init];
+    message.messageName = dict[@"messageName"];
+    message.connId = [dict[@"call_id"] integerValue];
+    message.ANI = dict[@"From"];
+    message.DNIS = dict[@"to"];
+    message.errorCode = dict[@"errorCode"];
+    message.errorMessage = dict[@"errorMessage"];
+    message.callType = 3;
+    if (_delegate && [_delegate respondsToSelector:@selector(onEventMessageHandler:)]) {
+        [_delegate onEventMessageHandler:message];
+    }
+}
+
+
+- (void)ncomingCallNotification:(NSNotification *)notification {
+    NSDictionary * dict= [notification userInfo];
+    
+    ESPMessage *message = [[ESPMessage alloc]init];
+    message.connId = [dict[@"call_id"] integerValue];
+    message.ANI = dict[@"remote_address"];
+    message.callType = 2;
+    if (_delegate && [_delegate respondsToSelector:@selector(onEventMessageHandler:)]) {
+        [_delegate onEventMessageHandler:message];
+    }
+}
+
+- (void)callStatusChangedNotification:(NSNotification *)notification {
+    ESPJPhoneCallStatus state = [notification.userInfo[@"state"] intValue];
+    if (_delegate && [_delegate respondsToSelector:@selector(onCallStatusChanged:)]) {
+        [_delegate onCallStatusChanged:state];
+    }
+}
 
 /*
  * @brief 注册分机
@@ -42,44 +121,6 @@
     return [PJPhone sharedPJPhone];
 }
 
-
-/*
- * @brief 结束初始化接口
- */
--(void)ESClientDeInit {
-    
-}
-
-/*
- * @brief 登入坐席接口
- */
--(void)ESClientOnline {
-  
-}
-
-
-/*
- * @brief 登出坐席接口
- */
--(void)ESClientOffline {
-    
-    
-}
-
-/*
- * @brief 就绪
- */
--(void)ESClientReady {
-    
-}
-
-/*
- * @brief 取消就绪
- */
--(void)ESClientnotReady {
-    
-}
-
 /*
  * @brief 拨打
  * @param phoneNumber - 呼叫的号码
@@ -109,7 +150,7 @@
  * @param connId - 呼叫标识
  */
 -(void)ESClientHoldCall:(NSString*)connId {
-  
+    [[PJPhone sharedPJPhone]setCallHold:[connId integerValue]];
 }
 
 /*
@@ -117,27 +158,61 @@
  * @param connId - 呼叫标识
  */
 -(void)ESClientRetriveCall:(NSString*)connId {
-    
+    [[PJPhone sharedPJPhone]setUhold:[connId integerValue]];
 }
 
 /*
- * @brief 取回保持
+ * @brief 转接
  * @param phoneNumber - 转接号码
  * @param connId - 呼叫标识
  */
 -(void)ESClientReferCall:(NSString* )phoneNumber connId:(NSString*)connId {
-    
+    [[PJPhone sharedPJPhone] calltransfer:[connId integerValue] dnNumber:phoneNumber];
 }
 
 
 /*
- * @brief 取回保持
+ * @brief 会议通话
  * @param phoneNumber - 邀请会议号码
  * @param connId - 呼叫标识
  */
--(void)ESClientConferenceCall:(NSString* )phoneNumber connId:(NSString*)connId {
-    
+-(void)ESClientConferenceCall:(NSString* )phoneNumber {
+    BOOL ismakeCall=  [[PJPhone sharedPJPhone]ESClientMakeCall:phoneNumber];
+    if (ismakeCall) self.isConferenceCall=YES;
 }
+
+/**
+ 挂断
+ 
+ @param callid - 呼叫标识
+ @param requestMessage - 结束语
+ */
+-(void)ESClientHangup:(NSInteger)callid requestMessage:(NSString*)requestMessage {
+    if(self.isConferenceCall){
+        [[SocketRocketUtility instance]hangup];
+    }else{
+        [[PJPhone sharedPJPhone]sendR:callid requestMessage:requestMessage];
+    }
+}
+
+/**
+ 登出
+ */
+-(BOOL)ESClientLogOut {
+    return [[PJPhone sharedPJPhone] deleteAcc];
+}
+
+-(void)setIsCalling:(BOOL)isCalling {
+    _isCalling = isCalling;
+    [PJPhone sharedPJPhone].isCalling = isCalling;
+}
+
+-(void)setIsConferenceCall:(BOOL)isConferenceCall {
+    _isConferenceCall = isConferenceCall;
+    [PJPhone sharedPJPhone].isConferenceCall = isConferenceCall;
+}
+
+
 
 
 @end
