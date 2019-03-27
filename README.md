@@ -11,35 +11,17 @@ typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
 };
 
 
-
-@protocol ESPJPhoneDelagate <NSObject>
-
 /**
  所有的sipserver事件都会回调此方法
  @param message 返回消息对象
  */
-@required
 - (void)onEventMessageHandler:(ESPMessage *)message;
 
 
 /**
  通话状态的变化 可根据onEventMessageHandler获取通话的信息
  */
-@optional
 - (void)onCallStatusChanged:(ESPJPhoneCallStatus)callStatus;
-
-@end
-
-@interface ESPJPhone : NSObject
-
-
-@property (nonatomic, weak)id<ESPJPhoneDelagate> delegate;
-
-
-/**
- 单例创建
- */
-+ (instancetype )sharedESPJPhone;
 
 
 /**
