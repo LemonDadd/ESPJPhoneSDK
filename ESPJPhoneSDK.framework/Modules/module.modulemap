@@ -1,0 +1,6 @@
+framework module ESPJPhoneSDK {
+  umbrella header "ESPJPhoneSDK.h"
+
+  export *
+  module * { export * }
+}
