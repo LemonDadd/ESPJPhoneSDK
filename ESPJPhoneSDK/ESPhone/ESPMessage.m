@@ -12,3 +12,8 @@
 
 
 @end
+
+@implementation ESPRegisterMessage
+
+
+@end

@@ -49,9 +49,23 @@ static  ESPJPhone  *_espjPhone;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onEventMessageChanged:) name:@"onEventMessageHandler" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(ncomingCallNotification:) name:@"SIPIncomingCallNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(callStatusChangedNotification:) name:@"SIPCallStatusChangedNotification" object:nil];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onHandleRegisterStatus:) name:@"SIPRegisterStatusNotification" object:nil];
     
     return [[PJPhone sharedPJPhone]startpjsua];
+}
+
+
+- (void)onHandleRegisterStatus:(NSNotification *)notification {
+    NSDictionary * dict= [notification userInfo];
+    
+    ESPRegisterMessage *message = [[ESPRegisterMessage alloc]init];
+    message.acc_id = dict[@"acc_id"];
+    message.status_text = dict[@"status_text"];
+    message.status = [dict[@"status"] integerValue];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(onHandleRegisterStatus:)]) {
+        [_delegate onHandleRegisterStatus:message];
+    }
 }
 
 //消息的回调
@@ -107,18 +121,6 @@ static  ESPJPhone  *_espjPhone;
  */
 -(BOOL)ESClientUnRegister {
     return [[PJPhone sharedPJPhone] ESClientUnRegister];
-}
-
-/*
- * @brief 初始化CTI接口
- * @param registerSip - 是否注册直接注册分机
- * @param dnNumber - 分机号码
- * @param dnPassword - 分机密码
- * @param ctiUrl - ctiUrl
- * @param sipServerUrl - sipServer服务器地址
- */
--(BOOL)ESClientCTIInit:(BOOL)registerSip ctiUrl:(NSString*)ctiUrl sipServerUrl:(NSString*)sipServerUrl dnNumber:(NSString*)dnNumber dnPassword:(NSString*)dnPassword {
-    return [PJPhone sharedPJPhone];
 }
 
 /*

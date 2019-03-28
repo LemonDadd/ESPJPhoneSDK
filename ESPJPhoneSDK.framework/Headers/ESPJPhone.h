@@ -21,7 +21,6 @@ typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
 };
 
 
-
 @protocol ESPJPhoneDelagate <NSObject>
 
 /**
@@ -32,11 +31,16 @@ typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
 - (void)onEventMessageHandler:(ESPMessage *)message;
 
 
+@optional
 /**
  通话状态的变化 可根据onEventMessageHandler获取通话的信息
  */
-@optional
 - (void)onCallStatusChanged:(ESPJPhoneCallStatus)callStatus;
+
+/**
+ 注册后返回的信息
+ */
+- (void)onHandleRegisterStatus:(ESPRegisterMessage *)registerMessage;
 
 @end
 

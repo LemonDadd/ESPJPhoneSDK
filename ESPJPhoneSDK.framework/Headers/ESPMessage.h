@@ -60,4 +60,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+
+@interface ESPRegisterMessage : NSObject
+
+//注册后返回的对象模型  status=200 代表注册成功
+//status_text 错误信息
+
+@property (nonatomic, copy)NSString *acc_id;
+@property (nonatomic, copy)NSString *status_text;
+@property (nonatomic, assign)NSInteger status;
+
+@end
+
 NS_ASSUME_NONNULL_END
