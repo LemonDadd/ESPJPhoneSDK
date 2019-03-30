@@ -108,11 +108,6 @@ static  ESPJPhone  *_espjPhone;
     message.state_text =dict[@"state_text"];
     message.From =dict[@"From"];
     message.to =dict[@"to"];
-    
-    if (message.state == PJSIP_INV_STATE_DISCONNECTED) {
-        pjsua_call_id call_id = [notification.userInfo[@"call_id"] intValue];
-        pjsua_call_answer(call_id, 200, NULL, NULL);
-    }
     if (_delegate && [_delegate respondsToSelector:@selector(onCallStatusChanged:)]) {
         [_delegate onCallStatusChanged:message];
     }
