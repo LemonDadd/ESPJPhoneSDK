@@ -11,10 +11,10 @@
 #import "SocketRocketUtility.h"
 #import "SRWebSocket.h"
 #import "ESPlayAudio.h"
+#import <pjsua-lib/pjsua.h>
 
 @interface ESPJPhone()
 
-@property (nonatomic,assign) BOOL isConferenceCall;//是否会议通话
 @property (nonatomic, assign) BOOL isCalling;//是否通话中
 
 @end
@@ -74,7 +74,7 @@ static  ESPJPhone  *_espjPhone;
     
     ESPMessage *message = [[ESPMessage alloc]init];
     message.messageName = dict[@"messageName"];
-    message.connId = [dict[@"call_id"] integerValue];
+    message.connId = [dict[@"call_id"] intValue];
     message.ANI = dict[@"From"];
     message.DNIS = dict[@"to"];
     message.errorCode = dict[@"errorCode"];
@@ -90,7 +90,7 @@ static  ESPJPhone  *_espjPhone;
     NSDictionary * dict= [notification userInfo];
     
     ESPMessage *message = [[ESPMessage alloc]init];
-    message.connId = [dict[@"call_id"] integerValue];
+    message.connId = [dict[@"call_id"] intValue];
     message.ANI = dict[@"remote_address"];
     message.callType = 2;
     if (_delegate && [_delegate respondsToSelector:@selector(onEventMessageHandler:)]) {
@@ -99,9 +99,22 @@ static  ESPJPhone  *_espjPhone;
 }
 
 - (void)callStatusChangedNotification:(NSNotification *)notification {
-    ESPJPhoneCallStatus state = [notification.userInfo[@"state"] intValue];
+    NSDictionary *dict = [notification userInfo];
+    ESPCallStatusMessage *message = [[ESPCallStatusMessage alloc]init];
+    message.call_id =[dict[@"call_id"] intValue];
+    message.state =[dict[@"state"] integerValue];
+    message.pjsipConfAudioId =[dict[@"pjsipConfAudioId"] integerValue];
+    message.last_status =[dict[@"last_status"] integerValue];
+    message.state_text =dict[@"state_text"];
+    message.From =dict[@"From"];
+    message.to =dict[@"to"];
+    
+    if (message.state == PJSIP_INV_STATE_DISCONNECTED) {
+        pjsua_call_id call_id = [notification.userInfo[@"call_id"] intValue];
+        pjsua_call_answer(call_id, 200, NULL, NULL);
+    }
     if (_delegate && [_delegate respondsToSelector:@selector(onCallStatusChanged:)]) {
-        [_delegate onCallStatusChanged:state];
+        [_delegate onCallStatusChanged:message];
     }
 }
 

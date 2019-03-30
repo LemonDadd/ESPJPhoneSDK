@@ -10,17 +10,6 @@
 #import "ESPMessage.h"
 
 
-typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
-    ESPJPhoneCallStatus_NULL=0,           /**< 在发送或接收邀请之前*/
-    ESPJPhoneCallStatus_CALLING,          /**< 发出邀请后*/
-    ESPJPhoneCallStatus_INCOMING,         /**< 收到邀请后*/
-    ESPJPhoneCallStatus_EARLY,            /**< 响应*/
-    ESPJPhoneCallStatus_CONNECTING,       /**< 呼叫中*/
-    ESPJPhoneCallStatus_CONFIRMED,        /**< 接通*/
-    ESPJPhoneCallStatus_DISCONNECTED,     /**< 挂断*/
-};
-
-
 @protocol ESPJPhoneDelagate <NSObject>
 
 /**
@@ -35,7 +24,7 @@ typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
 /**
  通话状态的变化 可根据onEventMessageHandler获取通话的信息
  */
-- (void)onCallStatusChanged:(ESPJPhoneCallStatus)callStatus;
+- (void)onCallStatusChanged:(ESPCallStatusMessage *)callStatus;
 
 /**
  注册后返回的信息
@@ -49,6 +38,11 @@ typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
 
 @property (nonatomic, weak)id<ESPJPhoneDelagate> delegate;
 
+
+/**
+ 是否是会议
+ */
+@property (nonatomic, assign)BOOL isConferenceCall;
 
 /**
  单例创建
@@ -130,12 +124,11 @@ typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
  */
 -(void)ESClientHangup:(NSInteger)callid requestMessage:(NSString*)requestMessage;
 
-
-
 /**
  登出
  */
 -(BOOL)ESClientLogOut;
+
 
 @end
 

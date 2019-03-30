@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+
+//播放声音的类,在需
+
 @interface ESPlayAudio : NSObject
+
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 
 
@@ -22,7 +26,8 @@
 
 -(void)stop;
 
+//听筒模式
 -(void)setAudioSession;
-
+//扬声器模式
 -(void)setAudioWaiFangSession;
 @end

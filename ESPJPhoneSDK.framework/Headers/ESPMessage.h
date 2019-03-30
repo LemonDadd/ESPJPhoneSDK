@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, ESPJPhoneCallStatus) {
+    ESPJPhoneCallStatus_NULL=0,           /**< 在发送或接收邀请之前*/
+    ESPJPhoneCallStatus_CALLING,          /**< 发出邀请后*/
+    ESPJPhoneCallStatus_INCOMING,         /**< 收到邀请后*/
+    ESPJPhoneCallStatus_EARLY,            /**< 响应*/
+    ESPJPhoneCallStatus_CONNECTING,       /**< 呼叫中*/
+    ESPJPhoneCallStatus_CONFIRMED,        /**< 接通*/
+    ESPJPhoneCallStatus_DISCONNECTED,     /**< 挂断*/
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ESPMessage : NSObject
@@ -28,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  呼叫标识
  */
-@property (nonatomic, assign)NSInteger connId;
+@property (nonatomic, assign)int connId;
 
 /**
  主叫号码
@@ -70,6 +80,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy)NSString *acc_id;
 @property (nonatomic, copy)NSString *status_text;
 @property (nonatomic, assign)NSInteger status;
+
+@end
+
+
+@interface ESPCallStatusMessage : NSObject
+
+@property (nonatomic, assign)ESPJPhoneCallStatus  state; //呼叫状态
+@property (nonatomic, assign)int call_id;
+@property (nonatomic, assign)NSInteger pjsipConfAudioId;     //第一个音频流的会议端口号
+@property (nonatomic, assign)NSInteger last_status;        // 最后听到的状态码，可以用作原因码
+@property (nonatomic, copy)NSString *state_text;
+@property (nonatomic, copy)NSString *From;
+@property (nonatomic, copy)NSString *to;
 
 @end
 
